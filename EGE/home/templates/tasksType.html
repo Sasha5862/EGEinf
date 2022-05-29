@@ -1,0 +1,8 @@
+
+{% extends "layout/basic.html" %}
+{% block title %}Главна страница{% endblock %}
+{% block content  %}
+    {% for type in types %}
+        <h2 class="text-dark">{{ type.title }}</h2
+    {% endfor %}
+{% endblock  %}
