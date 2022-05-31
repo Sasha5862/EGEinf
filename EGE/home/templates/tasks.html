@@ -1,0 +1,26 @@
+{% extends "layout/basic.html" %}
+{% block title %}{{type}}{% endblock %}
+{% block content  %}
+    <p class="text-dark fs-1 text-center fw-bold">
+        Здачи на "{{ type.title }}"
+     </p>
+     {% for task in tasks %}
+
+     <div class="shadow p-3 mb-5 bg-body rounded-4 w-50 position-absolute top-25 start-50 translate-middle-x">
+         <p>{{ task.content }}</p>
+         {{ task.dop|safe }}
+         <div class="dropdown">
+            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+              Ответ
+            </a>
+          
+            <ul class="dropdown-menu " aria-labelledby="dropdownMenuLink">
+              <li class="p-lg-2">Ответ: {{ task.answer }}</li>
+              
+            </ul>
+          </div>
+     </div>
+
+     
+     {% endfor %}
+{% endblock  %}
