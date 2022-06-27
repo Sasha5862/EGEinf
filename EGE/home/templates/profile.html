@@ -1,0 +1,41 @@
+{% extends "layout/basic.html" %}
+{% load bootstrap5 %}
+
+{% block title %}Профиль{% endblock %}
+{% block content %}
+    {% if user.is_authenticated %}
+    <div class="m-lg-2" style="width:100%;">
+        <div class="p-lg-3 left card" style="float:left;  width: 20%;">
+            <div class="card-body">
+                <img src="{{ user.profile.photo.url }}" class="rounded float-start" style="width: 200px;">
+            </div>
+            <div class="center card-body" >
+                <h4 class="card-title">{{ user.first_name }} {{ user.last_name }}</h4>
+                <p class="text-black-50">@{{user.username}}</p>
+                
+                {% if user.is_superuser %}
+                    <span class="badge text-bg-info">Admin</span>
+                {% endif %}
+                {% if user.profile.pro %}
+                    <span class="badge text-bg-warning">PRO - подписка</span>
+                {% endif %}
+  
+
+            </div>
+            <div class="d-grid gap-2">
+            <div class="d-grid gap-2">
+                <button onclick="document.location='{% url 'home:logout' %}'" class="btn btn-danger" type="button">Выйти</button>
+            </div>
+        </div>
+    </div>
+        <div class="card" style="float:center;">
+            <div class="card-body">
+                <p>Решил n задач</p>
+            </div>
+        </div>
+    </div>
+        {% else %}
+            <h2 class="text-center">Вы ещё не зарегистрировались</h2>
+        {% endif %}
+
+{% endblock %}

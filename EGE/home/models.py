@@ -1,11 +1,21 @@
 from email.mime import image
+from email.policy import default
 from inspect import classify_class_attrs
 from multiprocessing.connection import answer_challenge
-from tkinter import N
+from xmlrpc.client import Boolean
 from django.db import models
+from django.contrib.auth.models import User
 import uuid
 
+from pkg_resources import safe_extra
+
 # Create your models here.
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    pro  = models.BooleanField(default=False)
+    photo = models.ImageField(blank=True, default="static/avatar.jpg")
+    tasks = models.ManyToManyField('Task', blank=True, default=None)
+
 class typeTask(models.Model):
     COMP = (
         ('easy', 'Легко'),
@@ -26,12 +36,20 @@ class subType(models.Model):
         return self.title
 
 class Task(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     type = models.ForeignKey(subType, on_delete=models.PROTECT)
+    traning = models.BooleanField(default=False)
     content = models.TextField(max_length =  500)
-    dop = models.TextField(max_length = 3000, blank=True)
     answer = models.CharField(max_length=50)
-    image = models.ImageField(blank=True, null=True, upload_to="images/")
+    solution = models.TextField(max_length=500, blank=True)
+    image = models.ImageField(blank=True, upload_to="images/")
 
     def __str__(self):
-        return self.content
+        return self.content[0:10]
+
+class Decision(models.Model):
+    title = models.CharField(max_length=50)
+    type = models.ForeignKey(typeTask, on_delete=models.PROTECT)
+    content = models.TextField(max_length=10000)
+    def __str__(self):
+        return self.title
+    

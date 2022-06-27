@@ -4,21 +4,34 @@
     <p class="text-dark fs-1 text-center fw-bold">
         Здачи на "{{ type.title }}"
      </p>
+     <hr>
      {% for task in tasks %}
 
-     <div class="shadow p-3 mb-5 bg-body rounded-4 w-50 position-absolute top-25 start-50 translate-middle-x">
-         <p>{{ task.content }}</p>
-         {{ task.dop|safe }}
+     <div class="mx-auto mb-5 shadow p-3 bg-body rounded-4 w-50">
+         {{ task.content|safe }}
+
          <div class="dropdown">
+
             <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
               Ответ
             </a>
-          
+
             <ul class="dropdown-menu " aria-labelledby="dropdownMenuLink">
-              <li class="p-lg-2">Ответ: {{ task.answer }}</li>
-              
-            </ul>
-          </div>
+                <li class="ps-2">Ответ: {{ task.answer }}</li>
+                
+              </ul>
+            {% if task.solution != None %}
+                <button class="btn btn-primary" data-toggle="dropdown" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ forloop.counter }}" aria-expanded="false" aria-controls="collapse{{ forloop.counter }}">
+                    Решение
+                </button>
+                <div class="mt-2 collapse" id="collapse{{ forloop.counter }}">
+                    <div class="card card-body">
+                        {{ task.solution|safe }}
+                    </div>
+            {% endif %}
+            </div>
+        </div>
+         
      </div>
 
      
